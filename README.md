@@ -14,16 +14,27 @@ $ go install github.com/ruel/pcaplay
 pcaplay -file <pcap-file> [-port <listening-port>] [-proto tcp|udp] [-bpf <bpf-filter>] [-delay <packet-delay-ms>] [-wait <wait-flag-toggle>]
 ```
 
-* **bpf** - Berkeley Packet Filter (BPF) string to isolate packets
-* **delay** - Delay between sent packets in milliseconds *(default 100)*
-* **file** - Location of PCAP file to replay
-* **port** - Layer 4 listening port *(default 8484)*
-* **proto** - Layer 4 protocol to use *(default "tcp")*
-* **wait** - Wait for first packet before starting replay *(default true)*
+|Option|Description|
+|----|----|
+| **bpf** | Berkeley Packet Filter (BPF) string to isolate packets |
+| **delay** | Delay between sent packets in milliseconds *(default 100)* |
+| **file** | Location of PCAP file to replay |
+| **port** | Layer 4 listening port *(default 8484)* |
+| **proto** | Layer 4 protocol to use *(default "tcp")* |
+| **wait** | Wait for first packet before starting replay *(default true)* |
 
 ## BPF Syntax
 
-Pcap files can be prepared and trimmed with [Wireshark](https://www.wireshark.org/)
+Pcap files can be prepared and trimmed with [Wireshark](https://www.wireshark.org/). In some cases, pcap files can be very large or unmanageable in such softwares
+and warrants on the fly (while reading) filtering. This can be achieved by using **BPF** or **Berkley Packet Filter**.
+
+**pcaplay** accepts a bpf filter option to localize packets to be sent to the connection. Most common filters can be:
+
+* `host 1.1.1.1` - Isolates packets with the given host in either directions
+* `port 1234` - Returns packets with connections that uses given port in either directions
+* `dst port 1234` - Returns packets with a given destination port
+
+More information about the syntax can be found at this link: http://biot.com/capstats/bpf.html
 
 ## License
 
